@@ -11,6 +11,6 @@ if __name__ == '__main__':
         if result.status_code == 200 and result.text != ip:
             logger.info('ip changed to ' + result.text)
             ip = result.text
-            # 调用腾讯api更新地址
+            # call txcloud api
         else:
             print('fuck')
