@@ -15,7 +15,7 @@ ip = ''
 
 def call_txapi(new_ip):
     try:
-        cred = credential.Credential("AKIDrXx70cy3rPggQt50f3A0ziALFtGMBk23", "lFTQ5TbU6RWKq54lCMEqBE0XnmUv5wWo")
+        cred = credential.Credential("", "")
         httpProfile = HttpProfile()
         httpProfile.endpoint = "dnspod.tencentcloudapi.com"
 
