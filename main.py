@@ -12,6 +12,33 @@ from tencentcloud.dnspod.v20210323 import dnspod_client, models
 logger.add('UpdateHomeIpAddressToCloud.log')
 ip = '221.232.174.157'
 
+
+def call_txapi(new_ip):
+    try:
+        cred = credential.Credential("AKIDrXx70cy3rPggQt50f3A0ziALFtGMBk23", "lFTQ5TbU6RWKq54lCMEqBE0XnmUv5wWo")
+        httpProfile = HttpProfile()
+        httpProfile.endpoint = "dnspod.tencentcloudapi.com"
+
+        clientProfile = ClientProfile()
+        clientProfile.httpProfile = httpProfile
+        client = dnspod_client.DnspodClient(cred, "", clientProfile)
+
+        req = models.ModifyDynamicDNSRequest()
+        params = {
+            "RecordId": 901070169,
+            "Domain": "taye.fun",
+            "RecordLine":"默认",
+            "Value":new_ip
+        }
+        req.from_json_string(json.dumps(params))
+
+        resp = client.ModifyDynamicDNS(req)
+        print(resp.to_json_string())
+
+    except TencentCloudSDKException as err:
+        print(err)
+
+
 if __name__ == '__main__':
     logger.debug('UpdateHomeIpAddressToCloud started')
     while True:
@@ -22,32 +49,10 @@ if __name__ == '__main__':
                 logger.info('result:' + result.text)
                 ip = result.text
                 # call txcloud api
+                call_txapi(ip)
             else:
                 logger.info('ip has not changed')
         else:
             logger.info('can not visit http://myip.ipip.net/s')
 
         time.sleep(20)
-
-
-def call_txapi():
-    try:
-        cred = credential.Credential("AKIDrXx70cy3rPggQt50f3A0ziALFtGMBk23", "lFTQ5TbU6RWKq54lCMEqBE0XnmUv5wWo")
-        httpProfile = HttpProfile()
-        httpProfile.endpoint = "dnspod.tencentcloudapi.com"
-
-        clientProfile = ClientProfile()
-        clientProfile.httpProfile = httpProfile
-        client = dnspod_client.DnspodClient(cred, "", clientProfile)
-
-        req = models.DescribeRecordRequest()
-        params = {
-
-        }
-        req.from_json_string(json.dumps(params))
-
-        resp = client.DescribeRecord(req)
-        print(resp.to_json_string())
-
-    except TencentCloudSDKException as err:
-        print(err)
