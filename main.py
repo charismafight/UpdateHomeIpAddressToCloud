@@ -10,7 +10,7 @@ from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentClo
 from tencentcloud.dnspod.v20210323 import dnspod_client, models
 
 logger.add('UpdateHomeIpAddressToCloud.log')
-ip = '221.232.174.157'
+ip = ''
 
 
 def call_txapi(new_ip):
